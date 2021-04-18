@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2d483d4d3fd2148ba702c95bc516fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  force: {x: 0, y: 0, z: 0}
+  speed: 5
 --- !u!1001 &76033267499964967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -343,6 +345,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4511568911583488182, guid: 18460c517fb7ad14984b127bfed618fc, type: 3}
+      propertyPath: m_Constraints
+      value: 56
+      objectReference: {fileID: 0}
     - target: {fileID: 8632166201223457109, guid: 18460c517fb7ad14984b127bfed618fc, type: 3}
       propertyPath: m_Name
       value: Rocket
