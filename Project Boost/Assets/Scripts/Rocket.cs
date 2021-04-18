@@ -6,14 +6,19 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     new Rigidbody rigidbody;
-    public float force = 1000.0f;
-    public float speed = 300.0f;
+    public float thrustForce = 1000.0f;   //to control thrust of rocket
+
+    public float speedRotation = 300.0f;    //to control rotation speed of rocket
+
+
+    new AudioSource audio;
 
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -23,28 +28,35 @@ public class Rocket : MonoBehaviour
         MoveRocket();
     }
 
-    private void ThrustRocket()
+    private void ThrustRocket()     //upward force function
     {
         if (Input.GetKey(KeyCode.Space))
         {
-
-            rigidbody.AddRelativeForce(Vector3.up * force * Time.deltaTime);
+            if (!audio.isPlaying)
+            {
+                audio.Play();
+            }
+            rigidbody.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
+        }
+        else
+        {
+            audio.Stop();
         }
     }
 
-    private void MoveRocket()
+    private void MoveRocket()       //rotation of rocket function
     {
-        rigidbody.freezeRotation = true;
+        rigidbody.freezeRotation = true;    //freeze autorotation of rocket before implementing manual rotation
 
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Rotate(Vector3.forward * speed * Time.deltaTime);
+            transform.Rotate(Vector3.forward * speedRotation * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            transform.Rotate(-Vector3.forward * speed * Time.deltaTime);
+            transform.Rotate(-Vector3.forward * speedRotation * Time.deltaTime);
         }
 
-        rigidbody.freezeRotation = false;
+        rigidbody.freezeRotation = false;   //restore autorotaion after implementation of manual rotation is done
     }
 }
