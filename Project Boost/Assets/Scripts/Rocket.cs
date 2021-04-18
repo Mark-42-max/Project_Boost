@@ -6,9 +6,9 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     new Rigidbody rigidbody;
-    public float thrustForce = 1000.0f;   //to control thrust of rocket
+    [SerializeField] float thrustForce = 1000.0f;   //to control thrust of rocket
 
-    public float speedRotation = 300.0f;    //to control rotation speed of rocket
+    [SerializeField] float speedRotation = 300.0f;    //to control rotation speed of rocket
 
 
     new AudioSource audio;
