@@ -6,8 +6,8 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     new Rigidbody rigidbody;
-    public Vector3 force;
-    public float speed = 5.0f;
+    public float force = 1000.0f;
+    public float speed = 300.0f;
 
 
     // Start is called before the first frame update
@@ -27,19 +27,24 @@ public class Rocket : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            print("Thrust");
+
+            rigidbody.AddRelativeForce(Vector3.up * force * Time.deltaTime);
         }
     }
 
     private void MoveRocket()
     {
+        rigidbody.freezeRotation = true;
+
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Rotate(Vector3.forward * speed);
+            transform.Rotate(Vector3.forward * speed * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            transform.Rotate(-Vector3.forward * speed);
+            transform.Rotate(-Vector3.forward * speed * Time.deltaTime);
         }
+
+        rigidbody.freezeRotation = false;
     }
 }
