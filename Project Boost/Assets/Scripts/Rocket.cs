@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
@@ -37,8 +38,6 @@ public class Rocket : MonoBehaviour
                 audio.Play();
             }
 
-            thrustForce += 1;
-
             rigidbody.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
         }
         else
@@ -61,5 +60,21 @@ public class Rocket : MonoBehaviour
         }
 
         rigidbody.freezeRotation = false;   //restore autorotaion after implementation of manual rotation is done
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Enemy":
+                SceneManager.LoadScene(0);
+                break;
+            case "Friendly":
+                break;
+            case "Finish":
+
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                break;
+        }
     }
 }

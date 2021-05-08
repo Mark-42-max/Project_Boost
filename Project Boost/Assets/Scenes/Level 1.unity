@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 274060962}
   m_Layer: 0
   m_Name: Obstacle
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -914,7 +914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2d483d4d3fd2148ba702c95bc516fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrustForce: 500
+  thrustForce: 650
   speedRotation: 300
 --- !u!82 &871543234
 AudioSource:
@@ -1638,6 +1638,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1192853914420535091, guid: ebfa2e96500f85441bf2306bf3ef4642, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 933a3f6c8f6372346a8f95a3630cd37e, type: 2}
     - target: {fileID: 3072230494014311439, guid: ebfa2e96500f85441bf2306bf3ef4642, type: 3}
       propertyPath: m_Name
       value: Finish Base
@@ -1645,14 +1649,6 @@ PrefabInstance:
     - target: {fileID: 5768769065322910633, guid: ebfa2e96500f85441bf2306bf3ef4642, type: 3}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5768769065322910633, guid: ebfa2e96500f85441bf2306bf3ef4642, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 6.9019995
-      objectReference: {fileID: 0}
-    - target: {fileID: 5768769065322910633, guid: ebfa2e96500f85441bf2306bf3ef4642, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 7.8055
       objectReference: {fileID: 0}
     - target: {fileID: 5768769065322910633, guid: ebfa2e96500f85441bf2306bf3ef4642, type: 3}
       propertyPath: m_LocalPosition.x
