@@ -914,7 +914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2d483d4d3fd2148ba702c95bc516fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrustForce: 1000
+  thrustForce: 500
   speedRotation: 300
 --- !u!82 &871543234
 AudioSource:
