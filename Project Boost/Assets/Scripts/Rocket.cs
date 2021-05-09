@@ -7,13 +7,15 @@ using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour
 {
     new Rigidbody rigidbody;
-    [SerializeField ] float thrustForce = 1000.0f;   //to control thrust of rocket
+    [SerializeField] float thrustForce = 1000.0f;   //to control thrust of rocket
 
     [SerializeField] float speedRotation = 300.0f;    //to control rotation speed of rocket
 
 
     new AudioSource audio;
 
+    private static int currentLevel = 1;
+    readonly private int maxLevel = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -67,13 +69,25 @@ public class Rocket : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Enemy":
+                currentLevel = 1;
                 SceneManager.LoadScene(0);
                 break;
+
             case "Friendly":
                 break;
-            case "Finish":
 
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            case "Finish":
+                if (currentLevel == maxLevel)
+                {
+                    currentLevel = 1;
+                    SceneManager.LoadScene(0);
+                }
+                else if (currentLevel < maxLevel)
+                {
+                    currentLevel++;
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
+
                 break;
         }
     }
