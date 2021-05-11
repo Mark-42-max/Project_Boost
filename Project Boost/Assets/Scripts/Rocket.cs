@@ -69,8 +69,7 @@ public class Rocket : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Enemy":
-                currentLevel = 1;
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(currentLevel);
                 break;
 
             case "Friendly":
@@ -79,13 +78,12 @@ public class Rocket : MonoBehaviour
             case "Finish":
                 if (currentLevel == maxLevel)
                 {
-                    currentLevel = 1;
-                    SceneManager.LoadScene(0);
+                    SceneManager.LoadScene(currentLevel + 1);
                 }
                 else if (currentLevel < maxLevel)
                 {
-                    currentLevel++;
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                    currentLevel++;
                 }
 
                 break;
