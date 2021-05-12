@@ -14,8 +14,12 @@ public class Rocket : MonoBehaviour
 
     new AudioSource audio;
 
+    //level data
     private static int currentLevel = 1;
     readonly private int maxLevel = 2;
+
+    enum State { Dead, Alive, Transcending}
+    State state = State.Alive;
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +31,11 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ThrustRocket();
-        MoveRocket();
+        if (state == State.Alive)
+        {
+            ThrustRocket();
+            MoveRocket();
+        }
     }
 
     private void ThrustRocket()     //upward force function
@@ -66,27 +73,44 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (state != State.Alive) { return; }
+
         switch (collision.gameObject.tag)
         {
             case "Enemy":
-                SceneManager.LoadScene(currentLevel);
+                state = State.Dead;
+                if (audio.isPlaying) { audio.Stop(); }
+                print("Hit");
+                Invoke("DeathCondition", 2f);
                 break;
 
             case "Friendly":
                 break;
 
             case "Finish":
-                if (currentLevel == maxLevel)
-                {
-                    SceneManager.LoadScene(currentLevel + 1);
-                }
-                else if (currentLevel < maxLevel)
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-                    currentLevel++;
-                }
-
+                state = State.Transcending;
+                if (audio.isPlaying) { audio.Stop(); }
+                Invoke("LevelUp", 2f);
                 break;
+        }
+    }
+
+    private void DeathCondition()
+    {
+        SceneManager.LoadScene(currentLevel);
+    }
+
+    private void LevelUp()
+    {
+        if (currentLevel == maxLevel)
+        {
+            SceneManager.LoadScene(currentLevel + 1);
+        }
+        else if (currentLevel < maxLevel)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            rigidbody.isKinematic = true;
+            currentLevel++;
         }
     }
 }
