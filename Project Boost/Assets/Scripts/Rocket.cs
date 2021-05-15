@@ -11,6 +11,15 @@ public class Rocket : MonoBehaviour
 
     [SerializeField] float speedRotation = 300.0f;    //to control rotation speed of rocket
 
+    //Audios
+    [SerializeField] AudioClip DeathSound;
+
+    [SerializeField] AudioClip ThrustSound;
+
+    [SerializeField] AudioClip LevelUpSound;
+
+    [SerializeField] AudioClip FinalLevelSound;
+
 
     new AudioSource audio;
 
@@ -34,7 +43,7 @@ public class Rocket : MonoBehaviour
         if (state == State.Alive)
         {
             ThrustRocket();
-            MoveRocket();
+            RotateRocket();
         }
     }
 
@@ -42,12 +51,7 @@ public class Rocket : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            if (!audio.isPlaying)
-            {
-                audio.Play();
-            }
-
-            rigidbody.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
+            ForceUpwaards();
         }
         else
         {
@@ -55,7 +59,17 @@ public class Rocket : MonoBehaviour
         }
     }
 
-    private void MoveRocket()       //rotation of rocket function
+    private void ForceUpwaards()
+    {
+        if (!audio.isPlaying)
+        {
+            audio.PlayOneShot(ThrustSound);
+        }
+
+        rigidbody.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
+    }
+
+    private void RotateRocket()       //rotation of rocket function
     {
         rigidbody.freezeRotation = true;    //freeze autorotation of rocket before implementing manual rotation
 
@@ -73,15 +87,16 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (state != State.Alive) { return; }
+        if (state != State.Alive) { return; }   //ignore collisions after death or after win
 
         switch (collision.gameObject.tag)
         {
             case "Enemy":
                 state = State.Dead;
                 if (audio.isPlaying) { audio.Stop(); }
+                audio.PlayOneShot(DeathSound);
                 print("Hit");
-                Invoke("DeathCondition", 2f);
+                Invoke("DeathCondition", 4f);
                 break;
 
             case "Friendly":
@@ -90,8 +105,23 @@ public class Rocket : MonoBehaviour
             case "Finish":
                 state = State.Transcending;
                 if (audio.isPlaying) { audio.Stop(); }
-                Invoke("LevelUp", 2f);
+
+                ProcessLevelUp();
                 break;
+        }
+    }
+
+    private void ProcessLevelUp()
+    {
+        if (currentLevel == maxLevel)
+        {
+            audio.PlayOneShot(FinalLevelSound);
+            Invoke("LevelUp", 4f);
+        }
+        else 
+        {
+            audio.PlayOneShot(LevelUpSound);
+            Invoke("LevelUp", 5.5f);
         }
     }
 
@@ -109,7 +139,6 @@ public class Rocket : MonoBehaviour
         else if (currentLevel < maxLevel)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            rigidbody.isKinematic = true;
             currentLevel++;
         }
     }
