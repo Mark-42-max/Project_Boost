@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Rocket : MonoBehaviour
 {
@@ -18,7 +19,9 @@ public class Rocket : MonoBehaviour
 
     [SerializeField] AudioClip LevelUpSound;
 
-    [SerializeField] AudioClip FinalLevelSound;
+    public Button thrust;
+    public Button rotL;
+    public Button rotR;
 
 
     new AudioSource audio;
@@ -33,6 +36,10 @@ public class Rocket : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       // if(SystemInfo.deviceType == DeviceType.Desktop)
+    //    {
+      //      control.enabled = false;
+       // }
         rigidbody = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
     }
@@ -65,7 +72,6 @@ public class Rocket : MonoBehaviour
         {
             audio.PlayOneShot(ThrustSound);
         }
-
         rigidbody.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
     }
 
@@ -115,13 +121,13 @@ public class Rocket : MonoBehaviour
     {
         if (currentLevel == maxLevel)
         {
-            audio.PlayOneShot(FinalLevelSound);
-            Invoke("LevelUp", 4f);
+            audio.PlayOneShot(LevelUpSound);
+            Invoke("LevelUp", 3.5f);
         }
         else 
         {
             audio.PlayOneShot(LevelUpSound);
-            Invoke("LevelUp", 5.5f);
+            Invoke("LevelUp", 3.5f);
         }
     }
 
