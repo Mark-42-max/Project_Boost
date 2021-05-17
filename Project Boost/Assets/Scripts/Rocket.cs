@@ -3,14 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class Rocket : MonoBehaviour
 {
     new Rigidbody rigidbody;
+    
+    //game variables
     [SerializeField] float thrustForce = 1000.0f;   //to control thrust of rocket
 
+
     [SerializeField] float speedRotation = 300.0f;    //to control rotation speed of rocket
+
+
 
     //Audios
     [SerializeField] AudioClip DeathSound;
@@ -19,12 +23,16 @@ public class Rocket : MonoBehaviour
 
     [SerializeField] AudioClip LevelUpSound;
 
-    public Button thrust;
-    public Button rotL;
-    public Button rotR;
+    //Effects
+    [SerializeField] ParticleSystem DeathAnim;
+
+    [SerializeField] ParticleSystem ThrustAnim;
+
+    [SerializeField] ParticleSystem LevelUpAnim;
 
 
     new AudioSource audio;
+    ParticleSystem effects;
 
     //level data
     private static int currentLevel = 1;
@@ -36,23 +44,24 @@ public class Rocket : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       // if(SystemInfo.deviceType == DeviceType.Desktop)
-    //    {
-      //      control.enabled = false;
-       // }
         rigidbody = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
+        effects = GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (state == State.Alive)
+        if (SystemInfo.deviceType == DeviceType.Desktop)
         {
-            ThrustRocket();
-            RotateRocket();
+            if (state == State.Alive)
+            {
+                ThrustRocket();
+                RotateRocket();
+            }
         }
     }
+
 
     private void ThrustRocket()     //upward force function
     {
@@ -63,7 +72,8 @@ public class Rocket : MonoBehaviour
         else
         {
             audio.Stop();
-        }
+            ThrustAnim.Stop();
+        }     
     }
 
     private void ForceUpwaards()
@@ -71,6 +81,10 @@ public class Rocket : MonoBehaviour
         if (!audio.isPlaying)
         {
             audio.PlayOneShot(ThrustSound);
+        }
+        if (!effects.isPlaying)
+        {
+            ThrustAnim.Play();
         }
         rigidbody.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
     }
