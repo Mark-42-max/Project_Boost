@@ -32,7 +32,6 @@ public class Rocket : MonoBehaviour
 
 
     new AudioSource audio;
-    ParticleSystem effects;
 
     //level data
     private static int currentLevel = 1;
@@ -46,7 +45,6 @@ public class Rocket : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
-        effects = GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -78,15 +76,15 @@ public class Rocket : MonoBehaviour
 
     private void ForceUpwaards()
     {
+        rigidbody.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
         if (!audio.isPlaying)
         {
             audio.PlayOneShot(ThrustSound);
         }
-        if (!effects.isPlaying)
+        if (!ThrustAnim.isPlaying)
         {
             ThrustAnim.Play();
         }
-        rigidbody.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
     }
 
     private void RotateRocket()       //rotation of rocket function
@@ -114,8 +112,10 @@ public class Rocket : MonoBehaviour
             case "Enemy":
                 state = State.Dead;
                 if (audio.isPlaying) { audio.Stop(); }
+                if (ThrustAnim.isPlaying) { ThrustAnim.Stop(); }
                 audio.PlayOneShot(DeathSound);
                 print("Hit");
+                DeathAnim.Play();
                 Invoke("DeathCondition", 4f);
                 break;
 
@@ -125,6 +125,8 @@ public class Rocket : MonoBehaviour
             case "Finish":
                 state = State.Transcending;
                 if (audio.isPlaying) { audio.Stop(); }
+                if (ThrustAnim.isPlaying) { ThrustAnim.Stop(); }
+                LevelUpAnim.Play();
 
                 ProcessLevelUp();
                 break;
