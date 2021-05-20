@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class Rocket : MonoBehaviour
 {
     new Rigidbody rigidbody;
@@ -50,7 +51,7 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SystemInfo.deviceType == DeviceType.Desktop)
+        if (SystemInfo.deviceType == DeviceType.Desktop)    //for desktop users
         {
             if (state == State.Alive)
             {
@@ -58,14 +59,52 @@ public class Rocket : MonoBehaviour
                 RotateRocket();
             }
         }
+
+        //else if (SystemInfo.deviceType == DeviceType.Handheld)
+        //{
+
+        //}
+        //if (state == State.Alive)
+        //{
+        //    HandheldThrust();
+        //    HandheldRotate();
+        //}
     }
 
+
+
+    //private void HandheldThrust()
+    //{
+    //    if (CrossPlatformInputManager.GetButton("Thrust"))
+    //    {
+    //        ForceUpwards();
+    //    }
+    //    else
+    //    {
+    //        audio.Stop();
+    //        ThrustAnim.Stop();
+    //    }
+    //}
+
+    //private void HandheldRotate()
+    //{
+    //    rigidbody.freezeRotation = true;
+    //    if (CrossPlatformInputManager.GetButton("Left"))
+    //    {
+    //        transform.Rotate(Vector3.forward * speedRotation * Time.deltaTime);
+    //    }
+    //    else if (CrossPlatformInputManager.GetButton("Right"))
+    //    {
+    //        transform.Rotate(-Vector3.forward * speedRotation * Time.deltaTime);
+    //    }
+    //    rigidbody.freezeRotation = false;
+    //}
 
     private void ThrustRocket()     //upward force function
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            ForceUpwaards();
+            ForceUpwards();
         }
         else
         {
@@ -74,7 +113,7 @@ public class Rocket : MonoBehaviour
         }     
     }
 
-    private void ForceUpwaards()
+    private void ForceUpwards()
     {
         rigidbody.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
         if (!audio.isPlaying)
@@ -111,11 +150,7 @@ public class Rocket : MonoBehaviour
         {
             case "Enemy":
                 state = State.Dead;
-                if (audio.isPlaying) { audio.Stop(); }
-                if (ThrustAnim.isPlaying) { ThrustAnim.Stop(); }
-                audio.PlayOneShot(DeathSound);
-                print("Hit");
-                DeathAnim.Play();
+                DeathAudioVisual();
                 Invoke("DeathCondition", 4f);
                 break;
 
@@ -124,13 +159,27 @@ public class Rocket : MonoBehaviour
 
             case "Finish":
                 state = State.Transcending;
-                if (audio.isPlaying) { audio.Stop(); }
-                if (ThrustAnim.isPlaying) { ThrustAnim.Stop(); }
+                LevelUpAudioVisual();
                 LevelUpAnim.Play();
 
                 ProcessLevelUp();
                 break;
         }
+    }
+
+    private void LevelUpAudioVisual()
+    {
+        if (audio.isPlaying) { audio.Stop(); }
+        if (ThrustAnim.isPlaying) { ThrustAnim.Stop(); }
+    }
+
+    private void DeathAudioVisual()
+    {
+        if (audio.isPlaying) { audio.Stop(); }
+        if (ThrustAnim.isPlaying) { ThrustAnim.Stop(); }
+        audio.PlayOneShot(DeathSound);
+        print("Hit");
+        DeathAnim.Play();
     }
 
     private void ProcessLevelUp()
