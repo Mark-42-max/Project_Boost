@@ -10,7 +10,7 @@ public class Rocket : MonoBehaviour
 {
     new Rigidbody rigidbody;
 
-    //public readonly Canvas handEnv;
+    public Canvas handEnv;
     
     //game variables
     [SerializeField] float thrustForce = 1000.0f;   //to control thrust of rocket
@@ -51,10 +51,11 @@ public class Rocket : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //if (SystemInfo.deviceType == DeviceType.Desktop)
-        //{
-        //    handEnv.enabled = false;
-        //}
+        handEnv = GameObject.FindGameObjectWithTag("EditorOnly").GetComponent<Canvas>();
+        if (SystemInfo.deviceType == DeviceType.Desktop)
+        {
+            handEnv.enabled = false;
+        }
         rigidbody = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
     }
