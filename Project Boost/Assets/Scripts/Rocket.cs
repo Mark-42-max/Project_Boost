@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets.CrossPlatformInput;
 
 
 public class Rocket : MonoBehaviour
 {
     new Rigidbody rigidbody;
+
+    //public readonly Canvas handEnv;
     
     //game variables
     [SerializeField] float thrustForce = 1000.0f;   //to control thrust of rocket
@@ -15,6 +18,10 @@ public class Rocket : MonoBehaviour
 
     [SerializeField] float speedRotation = 300.0f;    //to control rotation speed of rocket
 
+
+    [SerializeField] float levelLoadDelayDeath = 4f;   //Load the level after death
+
+    [SerializeField] float levelLoadDelayWin = 3.5f;   //Load the level after win
 
 
     //Audios
@@ -44,6 +51,10 @@ public class Rocket : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //if (SystemInfo.deviceType == DeviceType.Desktop)
+        //{
+        //    handEnv.enabled = false;
+        //}
         rigidbody = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
     }
@@ -60,45 +71,45 @@ public class Rocket : MonoBehaviour
             }
         }
 
-        //else if (SystemInfo.deviceType == DeviceType.Handheld)
-        //{
+        else if (SystemInfo.deviceType == DeviceType.Handheld)  //for android users
+        {
+            if (state == State.Alive)
+            {
+                HandheldThrust();
+                HandheldRotate();
+            }
+        }
 
-        //}
-        //if (state == State.Alive)
-        //{
-        //    HandheldThrust();
-        //    HandheldRotate();
-        //}
     }
 
 
 
-    //private void HandheldThrust()
-    //{
-    //    if (CrossPlatformInputManager.GetButton("Thrust"))
-    //    {
-    //        ForceUpwards();
-    //    }
-    //    else
-    //    {
-    //        audio.Stop();
-    //        ThrustAnim.Stop();
-    //    }
-    //}
+    private void HandheldThrust()
+    {
+        if (CrossPlatformInputManager.GetButton("Thrust"))
+        {
+            ForceUpwards();
+        }
+        else
+        {
+            audio.Stop();
+            ThrustAnim.Stop();
+        }
+    }
 
-    //private void HandheldRotate()
-    //{
-    //    rigidbody.freezeRotation = true;
-    //    if (CrossPlatformInputManager.GetButton("Left"))
-    //    {
-    //        transform.Rotate(Vector3.forward * speedRotation * Time.deltaTime);
-    //    }
-    //    else if (CrossPlatformInputManager.GetButton("Right"))
-    //    {
-    //        transform.Rotate(-Vector3.forward * speedRotation * Time.deltaTime);
-    //    }
-    //    rigidbody.freezeRotation = false;
-    //}
+    private void HandheldRotate()
+    {
+        rigidbody.freezeRotation = true;
+        if (CrossPlatformInputManager.GetButton("Left"))
+        {
+            transform.Rotate(Vector3.forward * speedRotation * Time.deltaTime);
+        }
+        else if (CrossPlatformInputManager.GetButton("Right"))
+        {
+            transform.Rotate(-Vector3.forward * speedRotation * Time.deltaTime);
+        }
+        rigidbody.freezeRotation = false;
+    }
 
     private void ThrustRocket()     //upward force function
     {
@@ -151,7 +162,7 @@ public class Rocket : MonoBehaviour
             case "Enemy":
                 state = State.Dead;
                 DeathAudioVisual();
-                Invoke("DeathCondition", 4f);
+                Invoke("DeathCondition", levelLoadDelayDeath);
                 break;
 
             case "Friendly":
@@ -187,12 +198,12 @@ public class Rocket : MonoBehaviour
         if (currentLevel == maxLevel)
         {
             audio.PlayOneShot(LevelUpSound);
-            Invoke("LevelUp", 3.5f);
+            Invoke("LevelUp", levelLoadDelayWin);
         }
         else 
         {
             audio.PlayOneShot(LevelUpSound);
-            Invoke("LevelUp", 3.5f);
+            Invoke("LevelUp", levelLoadDelayWin);
         }
     }
 
