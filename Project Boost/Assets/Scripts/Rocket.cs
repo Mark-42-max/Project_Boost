@@ -10,7 +10,7 @@ public class Rocket : MonoBehaviour
 {
     new Rigidbody rigidbody;
 
-    public Canvas handEnv;
+    private Canvas handEnv;
     
     //game variables
     [SerializeField] float thrustForce = 1000.0f;   //to control thrust of rocket
