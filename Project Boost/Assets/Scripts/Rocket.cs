@@ -43,7 +43,7 @@ public class Rocket : MonoBehaviour
 
     //level data
     private static int currentLevel = 1;
-    readonly private int maxLevel = 2;
+    readonly private int maxLevel = 10;
 
     enum State { Dead, Alive, Transcending}
     State state = State.Alive;
