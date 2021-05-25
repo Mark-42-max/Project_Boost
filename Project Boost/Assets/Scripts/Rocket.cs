@@ -56,6 +56,10 @@ public class Rocket : MonoBehaviour
         {
             handEnv.enabled = false;
         }
+        if(SystemInfo.deviceType == DeviceType.Handheld)
+        {
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        }
         rigidbody = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
     }
