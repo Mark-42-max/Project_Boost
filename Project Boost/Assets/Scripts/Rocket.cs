@@ -38,6 +38,9 @@ public class Rocket : MonoBehaviour
 
     [SerializeField] ParticleSystem LevelUpAnim;
 
+    //Developer tools
+    private bool collisionDisabled = false;
+
 
     new AudioSource audio;
 
@@ -84,10 +87,24 @@ public class Rocket : MonoBehaviour
                 HandheldRotate();
             }
         }
+        if (Debug.isDebugBuild)
+        {
+            DeveloperControls();
+        }
 
     }
 
-
+    private void DeveloperControls()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            collisionDisabled = !collisionDisabled;
+        }
+        if (Input.GetKey(KeyCode.L))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+    }
 
     private void HandheldThrust()
     {
@@ -160,7 +177,7 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (state != State.Alive) { return; }   //ignore collisions after death or after win
+        if (state != State.Alive || collisionDisabled) { return; }   //ignore collisions after death or after win
 
         switch (collision.gameObject.tag)
         {
