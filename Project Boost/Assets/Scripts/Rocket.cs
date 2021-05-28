@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityStandardAssets.CrossPlatformInput;
-//using UnityEngine.UI;
+using UnityEngine.UI;
 
 
 public class Rocket : MonoBehaviour
@@ -42,6 +42,10 @@ public class Rocket : MonoBehaviour
     //Developer tools
     private bool collisionDisabled = false;
 
+    //Fuel System
+    public Text fuelDisplay;
+    [SerializeField] private float fuelData = 1000;
+
 
     [SerializeField]new AudioSource audio;
 
@@ -66,6 +70,7 @@ public class Rocket : MonoBehaviour
         }
         rigidbody = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
+        fuelDisplay.text = "Fuel: " + fuelData.ToString();
     }
 
     // Update is called once per frame
@@ -158,6 +163,20 @@ public class Rocket : MonoBehaviour
         {
             ThrustAnim.Play();
         }
+        Fuelling();
+    }
+
+    private void Fuelling()
+    {
+        if(fuelData == 0) 
+        {
+            fuelDisplay.text = "Fuel: 0";
+            state = State.Dead;
+            DeathAudioVisual();
+            Invoke("DeathCondition", levelLoadDelayDeath);
+        }
+        fuelData -= 1;
+        fuelDisplay.text = "Fuel: " + fuelData.ToString();
     }
 
     private void RotateRocket()       //rotation of rocket function
