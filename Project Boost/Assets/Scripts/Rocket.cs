@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityStandardAssets.CrossPlatformInput;
+//using UnityEngine.UI;
 
 
 public class Rocket : MonoBehaviour
@@ -42,7 +43,7 @@ public class Rocket : MonoBehaviour
     private bool collisionDisabled = false;
 
 
-    new AudioSource audio;
+    [SerializeField]new AudioSource audio;
 
     //level data
     private static int currentLevel = 1;
@@ -102,7 +103,7 @@ public class Rocket : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.L))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            LevelUp();
         }
     }
 
@@ -238,7 +239,7 @@ public class Rocket : MonoBehaviour
     {
         if (currentLevel == maxLevel)
         {
-            SceneManager.LoadScene(currentLevel + 1);
+            SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 2);
         }
         else if (currentLevel < maxLevel)
         {

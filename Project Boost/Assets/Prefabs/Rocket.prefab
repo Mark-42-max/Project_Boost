@@ -458,6 +458,8 @@ MonoBehaviour:
   DeathAnim: {fileID: 8434036239560877983}
   ThrustAnim: {fileID: 8463485125210274164}
   LevelUpAnim: {fileID: 8433606622912130054}
+  fuel: 1000
+  fuelData: {fileID: 0}
 --- !u!1 &8632166201744025437
 GameObject:
   m_ObjectHideFlags: 0
