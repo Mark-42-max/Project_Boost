@@ -209,6 +209,10 @@ public class Rocket : MonoBehaviour
                 break;
 
             case "Friendly":
+                if(state == State.Alive)
+                {
+                    //do nothing
+                }
                 break;
 
             case "Finish":
