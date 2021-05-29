@@ -40,7 +40,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] ParticleSystem LevelUpAnim;
 
     //Developer tools
-    private bool collisionDisabled = false;
+    //private bool collisionDisabled = false;
 
     //Fuel System
     public Text fuelDisplay;
@@ -93,24 +93,24 @@ public class Rocket : MonoBehaviour
                 HandheldRotate();
             }
         }
-        if (Debug.isDebugBuild)
-        {
-            DeveloperControls();
-        }
+        //if (Debug.isDebugBuild)
+        //{
+        //    DeveloperControls();
+        //}
 
     }
 
-    private void DeveloperControls()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            collisionDisabled = !collisionDisabled;
-        }
-        if (Input.GetKey(KeyCode.L))
-        {
-            LevelUp();
-        }
-    }
+    //private void DeveloperControls()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.C))
+    //    {
+    //        collisionDisabled = !collisionDisabled;
+    //    }
+    //    if (Input.GetKey(KeyCode.L))
+    //    {
+    //        LevelUp();
+    //    }
+    //}
 
     private void HandheldThrust()
     {
@@ -198,7 +198,7 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (state != State.Alive || collisionDisabled) { return; }   //ignore collisions after death or after win
+        if (state != State.Alive ) { return; }   //ignore collisions after death or after win (to be included... or(||) collisionDisabled in 'if' on developer tools activation
 
         switch (collision.gameObject.tag)
         {
