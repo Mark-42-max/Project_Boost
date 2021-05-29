@@ -546,14 +546,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Controls:
 
+    
 
 
-    Space: Thrust rocket upwards.
+    Thrust Button: Thrust rocket upwards.
 
-    A or "Left arrow"
-    key : Rotate left
+    Left
+    Button : Rotate left
 
-    D or "Right arrow" key : Rotate right.'
+    Right Button : Rotate right.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

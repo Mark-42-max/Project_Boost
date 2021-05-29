@@ -59,15 +59,15 @@ public class Rocket : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        handEnv = GameObject.FindGameObjectWithTag("EditorOnly").GetComponent<Canvas>();
-        if (SystemInfo.deviceType == DeviceType.Desktop)
-        {
-            handEnv.enabled = false;
-        }
-        if(SystemInfo.deviceType == DeviceType.Handheld)
-        {
-            Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        }
+        //handEnv = GameObject.FindGameObjectWithTag("EditorOnly").GetComponent<Canvas>();
+        //if (SystemInfo.deviceType == DeviceType.Desktop)
+        //{
+        //    handEnv.enabled = false;
+        //}
+        //if(SystemInfo.deviceType == DeviceType.Handheld)
+        //{
+        //    Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        //}
         rigidbody = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
         fuelDisplay.text = "Fuel: " + fuelData.ToString();
@@ -76,22 +76,23 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SystemInfo.deviceType == DeviceType.Desktop)    //for desktop users
-        {
-            if (state == State.Alive)
-            {
-                ThrustRocket();
-                RotateRocket();
-            }
-        }
+        //if (SystemInfo.deviceType == DeviceType.Desktop)    //for desktop users
+        //{
+        //    if (state == State.Alive)
+        //    {
+        //        ThrustRocket();
+        //        RotateRocket();
+        //    }
+        //}
 
-        else if (SystemInfo.deviceType == DeviceType.Handheld)  //for android users
+        //else if (SystemInfo.deviceType == DeviceType.Handheld)  //for android users
+        //{
+
+        //}
+        if (state == State.Alive)
         {
-            if (state == State.Alive)
-            {
-                HandheldThrust();
-                HandheldRotate();
-            }
+            HandheldThrust();
+            HandheldRotate();
         }
         //if (Debug.isDebugBuild)
         //{
@@ -139,18 +140,18 @@ public class Rocket : MonoBehaviour
         rigidbody.freezeRotation = false;
     }
 
-    private void ThrustRocket()     //upward force function
-    {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            ForceUpwards();
-        }
-        else
-        {
-            audio.Stop();
-            ThrustAnim.Stop();
-        }     
-    }
+    //private void ThrustRocket()     //upward force function
+    //{
+    //    if (Input.GetKey(KeyCode.Space))
+    //    {
+    //        ForceUpwards();
+    //    }
+    //    else
+    //    {
+    //        audio.Stop();
+    //        ThrustAnim.Stop();
+    //    }     
+    //}
 
     private void ForceUpwards()
     {
@@ -180,21 +181,21 @@ public class Rocket : MonoBehaviour
         fuelDisplay.text = "Fuel: " + ((int)fuelData).ToString();
     }
 
-    private void RotateRocket()       //rotation of rocket function
-    {
-        rigidbody.freezeRotation = true;    //freeze autorotation of rocket before implementing manual rotation
+    //private void RotateRocket()       //rotation of rocket function
+    //{
+    //    rigidbody.freezeRotation = true;    //freeze autorotation of rocket before implementing manual rotation
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(Vector3.forward * speedRotation * Time.deltaTime);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(-Vector3.forward * speedRotation * Time.deltaTime);
-        }
+    //    if (Input.GetKey(KeyCode.A))
+    //    {
+    //        transform.Rotate(Vector3.forward * speedRotation * Time.deltaTime);
+    //    }
+    //    else if (Input.GetKey(KeyCode.D))
+    //    {
+    //        transform.Rotate(-Vector3.forward * speedRotation * Time.deltaTime);
+    //    }
 
-        rigidbody.freezeRotation = false;   //restore autorotaion after implementation of manual rotation is done
-    }
+    //    rigidbody.freezeRotation = false;   //restore autorotaion after implementation of manual rotation is done
+    //}
 
     private void OnCollisionEnter(Collision collision)
     {
