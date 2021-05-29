@@ -47,10 +47,10 @@ public class Rocket : MonoBehaviour
     [SerializeField] private float fuelData = 1000;
 
 
-    [SerializeField]new AudioSource audio;
+    new AudioSource audio;
 
     //level data
-    private static int currentLevel = 1;
+    public static int currentLevel = 1;
     readonly private int maxLevel = 10;
 
     enum State { Dead, Alive, Transcending}
@@ -168,15 +168,16 @@ public class Rocket : MonoBehaviour
 
     private void Fuelling()
     {
-        if(fuelData == 0) 
+        if(fuelData <=Mathf.Epsilon) 
         {
             fuelDisplay.text = "Fuel: 0";
             state = State.Dead;
             DeathAudioVisual();
             Invoke("DeathCondition", levelLoadDelayDeath);
         }
-        fuelData -= 1;
-        fuelDisplay.text = "Fuel: " + fuelData.ToString();
+        fuelData -= Time.deltaTime;
+        print(fuelData);
+        fuelDisplay.text = "Fuel: " + ((int)fuelData).ToString();
     }
 
     private void RotateRocket()       //rotation of rocket function

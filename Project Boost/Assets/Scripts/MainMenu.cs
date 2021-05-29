@@ -5,10 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void Play()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 5);
-    }
     public void Controls()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -17,5 +13,15 @@ public class MainMenu : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void Fuel()
+    {
+        SceneManager.LoadScene(8);
+    }
+
+    public void Obstacle()
+    {
+        SceneManager.LoadScene(6);
     }
 }

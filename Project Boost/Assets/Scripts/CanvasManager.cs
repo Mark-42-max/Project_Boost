@@ -14,4 +14,14 @@ public class CanvasManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
+
+    public void Play()
+    {
+        SceneManager.LoadScene(9);
+    }
+
+    public void Menu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }
