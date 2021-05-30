@@ -2056,6 +2056,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5625926318381707439, guid: 1cb26edb3709cf34eb9055cef0406e30, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -217
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625926318381707439, guid: 1cb26edb3709cf34eb9055cef0406e30, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 579
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cb26edb3709cf34eb9055cef0406e30, type: 3}
 --- !u!114 &2028360659 stripped
@@ -2386,10 +2394,6 @@ PrefabInstance:
     - target: {fileID: 1387036225853069557, guid: 1ffafa27f5571054282b57ffc6e533df, type: 3}
       propertyPath: m_Name
       value: Handheld Control
-      objectReference: {fileID: 0}
-    - target: {fileID: 1387036225853069557, guid: 1ffafa27f5571054282b57ffc6e533df, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ffafa27f5571054282b57ffc6e533df, type: 3}
