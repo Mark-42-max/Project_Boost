@@ -64,10 +64,10 @@ public class Rocket : MonoBehaviour
         //{
         //    handEnv.enabled = false;
         //}
-        //if(SystemInfo.deviceType == DeviceType.Handheld)
-        //{
-        //    Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        //}
+        if (SystemInfo.deviceType == DeviceType.Handheld)
+        {
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        }
         rigidbody = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
         fuelDisplay.text = "Fuel: " + fuelData.ToString();
@@ -76,23 +76,23 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SystemInfo.deviceType == DeviceType.Desktop)    //for desktop users
-        {
-            if (state == State.Alive)
-            {
-                ThrustRocket();
-                RotateRocket();
-            }
-        }
-
-        //else if (SystemInfo.deviceType == DeviceType.Handheld)  //for android users
+        //if (SystemInfo.deviceType == DeviceType.Desktop)    //for desktop users
         //{
         //    if (state == State.Alive)
         //    {
-        //        HandheldThrust();
-        //        HandheldRotate();
+        //        ThrustRocket();
+        //        RotateRocket();
         //    }
         //}
+
+        if (SystemInfo.deviceType == DeviceType.Handheld)  //for android users
+        {
+            if (state == State.Alive)
+            {
+                HandheldThrust();
+                HandheldRotate();
+            }
+        }
 
         //if (Debug.isDebugBuild)
         //{
@@ -113,36 +113,9 @@ public class Rocket : MonoBehaviour
     //    }
     //}
 
-    //private void HandheldThrust()
-    //{
-    //    if (CrossPlatformInputManager.GetButton("Thrust"))
-    //    {
-    //        ForceUpwards();
-    //    }
-    //    else
-    //    {
-    //        audio.Stop();
-    //        ThrustAnim.Stop();
-    //    }
-    //}
-
-    //private void HandheldRotate()
-    //{
-    //    rigidbody.freezeRotation = true;
-    //    if (CrossPlatformInputManager.GetButton("Left"))
-    //    {
-    //        transform.Rotate(Vector3.forward * speedRotation * Time.deltaTime);
-    //    }
-    //    else if (CrossPlatformInputManager.GetButton("Right"))
-    //    {
-    //        transform.Rotate(-Vector3.forward * speedRotation * Time.deltaTime);
-    //    }
-    //    rigidbody.freezeRotation = false;
-    //}
-
-    private void ThrustRocket()     //upward force function
+    private void HandheldThrust()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (CrossPlatformInputManager.GetButtonDown("Thrust"))
         {
             ForceUpwards();
         }
@@ -152,6 +125,33 @@ public class Rocket : MonoBehaviour
             ThrustAnim.Stop();
         }
     }
+
+    private void HandheldRotate()
+    {
+        rigidbody.freezeRotation = true;
+        if (CrossPlatformInputManager.GetButton("Left"))
+        {
+            transform.Rotate(Vector3.forward * speedRotation * Time.deltaTime);
+        }
+        else if (CrossPlatformInputManager.GetButton("Right"))
+        {
+            transform.Rotate(-Vector3.forward * speedRotation * Time.deltaTime);
+        }
+        rigidbody.freezeRotation = false;
+    }
+
+    //private void ThrustRocket()     //upward force function
+    //{
+    //    if (Input.GetKey(KeyCode.Space))
+    //    {
+    //        ForceUpwards();
+    //    }
+    //    else
+    //    {
+    //        audio.Stop();
+    //        ThrustAnim.Stop();
+    //    }
+    //}
 
     private void ForceUpwards()
     {
@@ -181,21 +181,21 @@ public class Rocket : MonoBehaviour
         fuelDisplay.text = "Fuel: " + ((int)fuelData).ToString();
     }
 
-    private void RotateRocket()       //rotation of rocket function
-    {
-        rigidbody.freezeRotation = true;    //freeze autorotation of rocket before implementing manual rotation
+    //private void RotateRocket()       //rotation of rocket function
+    //{
+    //    rigidbody.freezeRotation = true;    //freeze autorotation of rocket before implementing manual rotation
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(Vector3.forward * speedRotation * Time.deltaTime);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(-Vector3.forward * speedRotation * Time.deltaTime);
-        }
+    //    if (Input.GetKey(KeyCode.A))
+    //    {
+    //        transform.Rotate(Vector3.forward * speedRotation * Time.deltaTime);
+    //    }
+    //    else if (Input.GetKey(KeyCode.D))
+    //    {
+    //        transform.Rotate(-Vector3.forward * speedRotation * Time.deltaTime);
+    //    }
 
-        rigidbody.freezeRotation = false;   //restore autorotaion after implementation of manual rotation is done
-    }
+    //    rigidbody.freezeRotation = false;   //restore autorotaion after implementation of manual rotation is done
+    //}
 
     private void OnCollisionEnter(Collision collision)
     {

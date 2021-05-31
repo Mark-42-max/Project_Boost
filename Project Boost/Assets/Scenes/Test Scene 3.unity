@@ -449,6 +449,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Handheld Control
       objectReference: {fileID: 0}
+    - target: {fileID: 1387036226799943990, guid: 1ffafa27f5571054282b57ffc6e533df, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ffafa27f5571054282b57ffc6e533df, type: 3}
 --- !u!1001 &1559197141
@@ -906,8 +910,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5625926318381707439, guid: 1cb26edb3709cf34eb9055cef0406e30, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -275
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625926318381707439, guid: 1cb26edb3709cf34eb9055cef0406e30, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 659
+      value: 217
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cb26edb3709cf34eb9055cef0406e30, type: 3}
